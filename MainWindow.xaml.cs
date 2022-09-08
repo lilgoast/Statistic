@@ -74,6 +74,8 @@ namespace Statistic
             }
         }
 
+        //--------------Variational series--------------
+
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             double[] amountOfNumbers = new double[1];
@@ -119,36 +121,75 @@ namespace Statistic
                 }
             }
 
-            DataGridTextColumn[] textColumn = new DataGridTextColumn[arrayLength + 1];
-            Row row = new Row();
-            row.numbers = new int[arrayLength];
+
+            //Grid1
+
+            DataGridTextColumn[] textColumn1 = new DataGridTextColumn[arrayLength + 1];
+            Row1 row1 = new Row1();
+            row1.numbers = new int[arrayLength];
+            double amountOfAllNums = 0;
 
             DataGrid1.Columns.Clear();
             DataGrid1.Items.Clear();
 
-            DataGridTextColumn tc = new DataGridTextColumn();
-            tc.Header = "Xi";
-            tc.Binding = new Binding("name");
-            DataGrid1.Columns.Add(tc);
+            DataGridTextColumn tc1 = new DataGridTextColumn();
+            tc1.Header = "Xi";
+            tc1.Binding = new Binding("name");
+            DataGrid1.Columns.Add(tc1);
 
             for (int i = 1; i < arrayLength + 1; i++)
             {
-                textColumn[i] = new DataGridTextColumn();
-                textColumn[i].Header = numbers[i - 1, 0];
-                textColumn[i].Binding = new Binding($"numbers[{i - 1}]");
-                DataGrid1.Columns.Add(textColumn[i]);
+                textColumn1[i] = new DataGridTextColumn();
+                textColumn1[i].Header = numbers[i - 1, 0];
+                textColumn1[i].Binding = new Binding($"numbers[{i - 1}]");
+                DataGrid1.Columns.Add(textColumn1[i]);
 
-                row.numbers[i - 1] = Convert.ToInt32(numbers[i - 1, 1]) + 1;
+                row1.numbers[i - 1] = Convert.ToInt32(numbers[i - 1, 1]) + 1;
+                amountOfAllNums += Convert.ToInt32(numbers[i - 1, 1]) + 1;
             }
 
-            row.name = "Ni(Pi)";
+            row1.name = "Ni(Pi)";
 
-            DataGrid1.Items.Add(row);
+            DataGrid1.Items.Add(row1);
+
+            //Grid2
+            DataGridTextColumn[] textColumn2 = new DataGridTextColumn[arrayLength + 1];
+            Row2 row2 = new Row2();
+            row2.numbers = new double[arrayLength];
+
+            DataGrid2.Columns.Clear();
+            DataGrid2.Items.Clear();
+
+            DataGridTextColumn tc2 = new DataGridTextColumn();
+            tc2.Header = "Xi";
+            tc2.Binding = new Binding("name");
+            DataGrid2.Columns.Add(tc2);
+
+
+
+            for (int i = 1; i < arrayLength + 1; i++)
+            {
+                textColumn2[i] = new DataGridTextColumn();
+                textColumn2[i].Header = numbers[i - 1, 0];
+                textColumn2[i].Binding = new Binding($"numbers[{i - 1}]");
+                DataGrid2.Columns.Add(textColumn2[i]);
+
+                row2.numbers[i - 1] = Math.Round((Convert.ToInt32(numbers[i - 1, 1]) + 1) / amountOfAllNums, 2);
+            }
+
+            row2.name = "W";
+
+            DataGrid2.Items.Add(row2);
         }
 
-        public class Row
+        public class Row1
         {
             public int[] numbers { get; set; }
+            public string name { get; set; }
+        }
+        public class Row2
+        {
+            public double[] numbers { get; set; }
             public string name { get; set; }
         }
     }
