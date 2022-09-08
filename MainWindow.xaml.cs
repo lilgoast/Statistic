@@ -15,7 +15,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Threading;
-using System.Linq;
 
 namespace Statistic
 {
@@ -99,11 +98,12 @@ namespace Statistic
             double[,] numbers = new double[amountOfNumbers.Distinct().ToArray().Length - 1, 2];
             Array.Sort(amountOfNumbers);
             int index = 0;
+            int arrayLength = amountOfNumbers.Distinct().ToArray().Length - 1;
 
             for (int i = 1; i < amountOfNumbers.Length; i++)
             {
                 bool numberFinded = false;
-                for (int d = 0; d < amountOfNumbers.Distinct().ToArray().Length - 1; d++)
+                for (int d = 0; d < arrayLength; d++)
                 {
                     if (numbers[d, 0] == amountOfNumbers[i])
                     {
@@ -118,12 +118,38 @@ namespace Statistic
                     index++;
                 }
             }
+
+            DataGridTextColumn[] textColumn = new DataGridTextColumn[arrayLength + 1];
+            Row row = new Row();
+            row.numbers = new int[arrayLength];
+
+            DataGrid1.Columns.Clear();
+            DataGrid1.Items.Clear();
+
+            DataGridTextColumn tc = new DataGridTextColumn();
+            tc.Header = "Xi";
+            tc.Binding = new Binding("name");
+            DataGrid1.Columns.Add(tc);
+
+            for (int i = 1; i < arrayLength + 1; i++)
+            {
+                textColumn[i] = new DataGridTextColumn();
+                textColumn[i].Header = numbers[i - 1, 0];
+                textColumn[i].Binding = new Binding($"numbers[{i - 1}]");
+                DataGrid1.Columns.Add(textColumn[i]);
+
+                row.numbers[i - 1] = Convert.ToInt32(numbers[i - 1, 1]) + 1;
+            }
+
+            row.name = "Ni(Pi)";
+
+            DataGrid1.Items.Add(row);
         }
 
-        public class Number
+        public class Row
         {
-            public double num { get; set; }
-            public int amount { get; set; }
+            public int[] numbers { get; set; }
+            public string name { get; set; }
         }
     }
 }
