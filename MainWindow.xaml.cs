@@ -15,17 +15,27 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Threading;
+using System.Text.RegularExpressions;
 
 namespace Statistic
 {
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml
     /// </summary>
+    
     public partial class MainWindow : Window
     {
+        int chosed = 0;
+
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
         }
 
         private void button_Click(object sender, RoutedEventArgs e)
@@ -72,6 +82,8 @@ namespace Statistic
                 }
                 numsTextBox.Text = nums;
             }
+            Button_Click_1(sender, e);
+            Button_Click_2(sender, e);
         }
 
         //--------------Variational series--------------
@@ -97,6 +109,8 @@ namespace Statistic
                 }
             }
 
+            amountLabel.Content = "Всего елементов: " + (amountOfNumbers.Length - 1);
+
             double[,] numbers = new double[amountOfNumbers.Distinct().ToArray().Length - 1, 2];
             Array.Sort(amountOfNumbers);
             int index = 0;
@@ -121,9 +135,7 @@ namespace Statistic
                 }
             }
 
-
             //Grid1
-
             DataGridTextColumn[] textColumn1 = new DataGridTextColumn[arrayLength + 1];
             Row1 row1 = new Row1();
             row1.numbers = new int[arrayLength];
@@ -140,7 +152,7 @@ namespace Statistic
             for (int i = 1; i < arrayLength + 1; i++)
             {
                 textColumn1[i] = new DataGridTextColumn();
-                textColumn1[i].Header = numbers[i - 1, 0];
+                textColumn1[i].Header = Math.Round(numbers[i - 1, 0], 2);
                 textColumn1[i].Binding = new Binding($"numbers[{i - 1}]");
                 DataGrid1.Columns.Add(textColumn1[i]);
 
@@ -170,7 +182,7 @@ namespace Statistic
             for (int i = 1; i < arrayLength + 1; i++)
             {
                 textColumn2[i] = new DataGridTextColumn();
-                textColumn2[i].Header = numbers[i - 1, 0];
+                textColumn2[i].Header = Math.Round(numbers[i - 1, 0], 2);
                 textColumn2[i].Binding = new Binding($"numbers[{i - 1}]");
                 DataGrid2.Columns.Add(textColumn2[i]);
 
@@ -192,5 +204,170 @@ namespace Statistic
             public double[] numbers { get; set; }
             public string name { get; set; }
         }
+
+        public class RowIntervals
+        {
+            public double[] numbers { get; set; }
+            public string name { get; set; }
+        }
+
+        private void comboBox_Loaded(object sender, RoutedEventArgs e)
+        {
+            List<string> data = new List<string>();
+            data.Add("Период");
+            data.Add("Разделить на");
+
+            var combo = sender as ComboBox;
+            combo.ItemsSource = data;
+            combo.SelectedIndex = 0;
+        }
+
+        private void comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var selectedComboItem = sender as ComboBox;
+            chosed = selectedComboItem.SelectedIndex;
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            double[] amountOfNumbers = new double[0];
+            string line;
+            string nums = numsTextBox.Text.ToString();
+            StringReader strReader = new StringReader(nums);
+
+            while ((line = strReader.ReadLine()) != null)
+            {
+                string[] items = line.Split(' ');
+
+                foreach (string item in items)
+                {
+                    if (item.Length > 0)
+                    {
+                        Array.Resize(ref amountOfNumbers, amountOfNumbers.Length + 1);
+                        amountOfNumbers[amountOfNumbers.Length - 1] = Convert.ToDouble(item);
+                    }
+                }
+            }
+
+            double[,] numbers = new double[amountOfNumbers.Distinct().ToArray().Length, 2];
+            Array.Sort(amountOfNumbers);
+            double minValue = amountOfNumbers.Min();
+            double maxValue = amountOfNumbers.Max();
+            int index = 0;
+            int arrayLength = amountOfNumbers.Distinct().ToArray().Length - 1;
+
+            for (int i = 0; i < amountOfNumbers.Length; i++)
+            {
+                bool numberFinded = false;
+                for (int d = 0; d < arrayLength; d++)
+                {
+                    if (numbers[d, 0] == amountOfNumbers[i])
+                    {
+                        numbers[d, 1] += 1;
+                        numberFinded = true;
+                        break;
+                    }
+                }
+                if (!numberFinded)
+                {
+                    numbers[index, 0] = amountOfNumbers[i];
+                    index++;
+                }
+            }
+
+            DataGridTextColumn[] textColumnIntervals = new DataGridTextColumn[arrayLength + 1];
+            RowIntervals rowIntervals = new RowIntervals();
+            rowIntervals.numbers = new double[arrayLength];
+            double amountOfAllNums = 0;
+
+            DataGrid3.Columns.Clear();
+            DataGrid3.Items.Clear();
+
+            DataGridTextColumn tcIntervals = new DataGridTextColumn();
+            tcIntervals.Header = "Xi";
+            tcIntervals.Binding = new Binding("name");
+            DataGrid3.Columns.Add(tcIntervals);
+
+            for (int i = 0; i <= arrayLength; i++)
+            {
+                amountOfAllNums += Convert.ToInt32(numbers[i, 1]) + 1;
+            }
+
+            if (chosed == 0) // Период
+            {
+                periodLabel.Content = "";
+                int period = Convert.ToInt32(periodTextBox.Text);
+                int i = 0;
+                double iterationValue = minValue;
+                double absoluteInterval;
+                int indexPeriod = 0;
+
+                while (iterationValue <= maxValue)
+                {
+                    int periodValue = 0;
+
+                    absoluteInterval = ((double)iterationValue * 2 + period - 1) / 2;
+                    textColumnIntervals[i + 1] = new DataGridTextColumn();
+                    textColumnIntervals[i + 1].Header = $"[{Math.Round(iterationValue, 2)}, {Math.Round(iterationValue + period, 2)}) ({Math.Round(absoluteInterval, 2)})";
+                    textColumnIntervals[i + 1].Binding = new Binding($"numbers[{i}]");
+                    DataGrid3.Columns.Add(textColumnIntervals[i + 1]);
+
+                    while (indexPeriod <= arrayLength 
+                        && numbers[indexPeriod, 0] >= iterationValue
+                        && numbers[indexPeriod, 0] < (double)iterationValue + period)
+                    {
+                        periodValue += Convert.ToInt32(numbers[indexPeriod, 1]) + 1;
+                        indexPeriod++;
+                    }
+
+                    rowIntervals.numbers[i] = periodValue;
+                    iterationValue += period;
+                    i++;
+                }
+            }
+            else if(chosed == 1) // Разделить на
+            {
+                double period = (maxValue - minValue) / Convert.ToDouble(periodTextBox.Text);
+                periodLabel.Content = "Период: " + Math.Round(period, 2);
+                int i = 0;
+                double iterationValue = minValue;
+                double absoluteInterval;
+                int indexPeriod = 0;
+
+                while (Math.Round(iterationValue, 5) < maxValue)
+                {
+                    int periodValue = 0;
+
+                    absoluteInterval = ((double)iterationValue * 2 + period) / 2;
+                    textColumnIntervals[i + 1] = new DataGridTextColumn();
+                    if(iterationValue == minValue || iterationValue >= maxValue - period)
+                    {
+                        textColumnIntervals[i + 1].Header = $"[{Math.Round(iterationValue, 2)}, {Math.Round(iterationValue + period, 2)}] ({Math.Round(absoluteInterval, 2)})";
+                    }
+                    else
+                    {
+                        textColumnIntervals[i + 1].Header = $"({Math.Round(iterationValue, 2)}, {Math.Round(iterationValue + period, 2)}] ({Math.Round(absoluteInterval, 2)})";
+                    }
+                    textColumnIntervals[i + 1].Binding = new Binding($"numbers[{i}]");
+                    DataGrid3.Columns.Add(textColumnIntervals[i + 1]);
+
+                    while (indexPeriod <= arrayLength
+                        && numbers[indexPeriod, 0] >= iterationValue
+                        && numbers[indexPeriod, 0] <= Math.Round((double)iterationValue + period, 5))
+                    {
+                        periodValue += Convert.ToInt32(numbers[indexPeriod, 1]) + 1;
+                        indexPeriod++;
+                    }
+
+                    rowIntervals.numbers[i] = periodValue;
+                    iterationValue += period;
+                    i++;
+                }
+            }
+            rowIntervals.name = "Ni(Pi)";
+
+            DataGrid3.Items.Add(rowIntervals);
+        }
+
     }
 }
