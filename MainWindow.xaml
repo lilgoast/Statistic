@@ -7,11 +7,11 @@
         mc:Ignorable="d"
         Title="Statistic"
         MinHeight="250" MinWidth="200"
-        Height="785" Width="800">
+        Height="435" Width="800">
     <ScrollViewer>
-        <Grid Height="816">
+        <Grid Height="395" VerticalAlignment="Top">
             <Grid HorizontalAlignment="Left"
-                  VerticalAlignment="Stretch" 
+                  VerticalAlignment="Top" 
                   Margin="30,50,0,30">
 
                 <Button x:Name="selectFileButton"
@@ -20,7 +20,7 @@
                         Width="100" Click="button_Click"
                         Margin="0,0,0,0" 
                         VerticalAlignment="Top" 
-                        Height="20"/>
+                        Height="20" Cursor="Hand"/>
 
                 <TextBox x:Name="numsTextBox"
                          HorizontalAlignment="Left" Margin="0,30,0,0" 
@@ -30,10 +30,15 @@
 
             </Grid>
 
-            <Grid Margin="160,50,30,30" 
+            <Grid Margin="160,50,30,0" 
                   HorizontalAlignment="Stretch" 
-                  VerticalAlignment="Stretch">
+                  VerticalAlignment="Top">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="0*"/>
+                </Grid.RowDefinitions>
 
+<<<<<<< Updated upstream
                 <Button Content="Построить вариационные ряды"
                         HorizontalAlignment="Left" 
                         Margin="30,240,0,0"
@@ -42,6 +47,10 @@
 
                 <DataGrid x:Name="DataGrid1"
                           Margin="30,45,30,0" 
+=======
+                <DataGrid x:Name="DataGridSeries"
+                          Margin="30,35,30,0" 
+>>>>>>> Stashed changes
                           GridLinesVisibility="Vertical" 
                           Height="70" 
                           VerticalAlignment="Top" 
@@ -49,8 +58,9 @@
 
                 <Label Content="Вариационный ряд частот:"
                        HorizontalAlignment="Left"
-                       Margin="30,10,0,0"
+                       Margin="30,0,0,0"
                        VerticalAlignment="Top"
+<<<<<<< Updated upstream
                        Height="25"/>
 
                 <DataGrid x:Name="DataGrid2"
@@ -67,17 +77,30 @@
                        Height="25"/>
                 <DataGrid x:Name="DataGrid3"
                     Margin="30,305,30,0" 
+=======
+                       Height="25" Width="158"/>
+                <DataGrid x:Name="DataGridIntervals"
+                    Margin="30,185,29,0" 
+>>>>>>> Stashed changes
                     GridLinesVisibility="Vertical" 
                     Height="70" 
                     VerticalAlignment="Top" 
                     FontSize="14" HorizontalAlignment="Stretch"/>
                 <Label Content="Интервальный ряд:" 
                     HorizontalAlignment="Left"
+<<<<<<< Updated upstream
                     Margin="30,270,0,0"
+=======
+                    Margin="30,150,0,0"
+>>>>>>> Stashed changes
                     VerticalAlignment="Top" 
-                    Height="25"/>
+                    Height="25" Width="117"/>
                 <TextBox x:Name="periodTextBox" 
+<<<<<<< Updated upstream
                          Margin="145,385,0,0" 
+=======
+                         Margin="160,265,0,0" 
+>>>>>>> Stashed changes
                          TextWrapping="Wrap"      
                          HorizontalAlignment="Left" 
                          VerticalAlignment="Top" 
@@ -85,6 +108,7 @@
                          PreviewTextInput="PreviewTextInput" 
                          Height="20"
                          Text="5"/>
+<<<<<<< Updated upstream
                 <Button Content="Построить вариационные ряды"
                     HorizontalAlignment="Left" 
                     Margin="30,240,0,0"
@@ -98,22 +122,51 @@
                 <ComboBox x:Name="comboBox"
                           HorizontalAlignment="Left" 
                           Margin="30,385,0,0"
+=======
+                <Button Content="Построить ряды"
+                        HorizontalAlignment="Left" 
+                        Margin="30,295,0,0"
+                        VerticalAlignment="Top" 
+                        Click="Button_Click_Series"
+                        Width="180"
+                        Cursor="Hand" Height="20"/>
+                <ComboBox x:Name="comboBoxIntervals"
+                          HorizontalAlignment="Left" 
+                          Margin="30,265,0,0"
+>>>>>>> Stashed changes
                           VerticalAlignment="Top"
-                          Width="105" 
+                          Width="120" 
                           Height="20" 
+<<<<<<< Updated upstream
                           SelectionChanged="comboBox_SelectionChanged"
                           Loaded="comboBox_Loaded">
+=======
+                          SelectionChanged="comboBoxIntervals_SelectionChanged"
+                          Loaded="comboBoxIntervals_Loaded" Cursor="Hand">
+>>>>>>> Stashed changes
                 </ComboBox>
                 <Label x:Name="amountLabel" Content=""
                     HorizontalAlignment="Right"
                     Margin="0,10,30,0"
                     VerticalAlignment="Top"
-                    Height="25"/>
+                    Height="25" Width="10"/>
                 <Label x:Name="periodLabel" Content="" 
                     HorizontalAlignment="Right"
-                    Margin="1,270,30,0"
+                    Margin="0,270,30,0"
                     VerticalAlignment="Top" 
+<<<<<<< Updated upstream
                     Height="25"/>
+=======
+                    Height="25" Width="10"/>
+                <ComboBox x:Name="comboBoxSeries"
+                    HorizontalAlignment="Left" 
+                    Margin="30,120,0,0"
+                    VerticalAlignment="Top"
+                    Width="180" 
+                    Height="20" 
+                    SelectionChanged="comboBoxSeries_SelectionChanged"
+                    Loaded="comboBoxSeries_Loaded" Cursor="Hand"/>
+>>>>>>> Stashed changes
             </Grid>
         </Grid>
     </ScrollViewer>
