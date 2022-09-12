@@ -74,7 +74,7 @@ namespace Statistic
 
         //--------------Text In "periodTextBox" Handler--------------
 
-        private void PreviewTextInput(object sender, TextCompositionEventArgs e)
+        private void PreviewTextInputPeriod(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
@@ -154,16 +154,16 @@ namespace Statistic
                     }
                 }
 
-                amountLabel.Content = "Всего елементов: " + (amountOfNumbers.Length - 1);
+                amountLabel.Content = "Всего елементов: " + (amountOfNumbers.Length);
 
-                double[,] numbers = new double[amountOfNumbers.Distinct().ToArray().Length - 1, 2];
+                double[,] numbers = new double[amountOfNumbers.Distinct().ToArray().Length, 2];
                 Array.Sort(amountOfNumbers);
                 double minValue = amountOfNumbers.Min();
                 double maxValue = amountOfNumbers.Max();
                 int index = 0;
-                int arrayLength = amountOfNumbers.Distinct().ToArray().Length - 1;
+                int arrayLength = amountOfNumbers.Distinct().ToArray().Length;
 
-                for (int i = 1; i < amountOfNumbers.Length; i++)
+                for (int i = 0; i < amountOfNumbers.Length; i++)
                 {
                     bool numberFinded = false;
                     for (int d = 0; d < arrayLength; d++)
@@ -227,6 +227,7 @@ namespace Statistic
                 }
 
                 DataGridSeries.Items.Add(row);
+                amountLabel.Content = "Всего элементов: " + amountOfNumbers.Length;
 
                 //Intervals
 

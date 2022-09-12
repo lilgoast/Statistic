@@ -5,10 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Statistic"
         mc:Ignorable="d"
-        Title="ExeptionWindow" Height="100" Width="100">
+        Title="ExeptionWindow" Height="200" Width="400">
     <Grid>
         <Label x:Name="label" Content="Ошибка!" HorizontalAlignment="Center" Margin="0,16,0,0" VerticalAlignment="Top"/>
-        <Button Content="ОК" HorizontalAlignment="Center" Margin="0,57,0,0" VerticalAlignment="Top" Width="58" Click="Button_Click"/>
+        <Button Content="ОК" HorizontalAlignment="Center" Margin="0,128,0,0" VerticalAlignment="Top" Width="58" Click="Button_Click"/>
 
     </Grid>
 </Window>
