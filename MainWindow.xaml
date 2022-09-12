@@ -17,7 +17,7 @@
                 <Button x:Name="selectFileButton"
                         Content="Загрузить файл"
                         HorizontalAlignment="Left"
-                        Width="100" Click="button_Click"
+                        Width="100" Click="button_Click_Select_File"
                         Margin="0,0,0,0" 
                         VerticalAlignment="Top" 
                         Height="20" Cursor="Hand"/>
@@ -37,20 +37,8 @@
                     <RowDefinition/>
                     <RowDefinition Height="0*"/>
                 </Grid.RowDefinitions>
-
-<<<<<<< Updated upstream
-                <Button Content="Построить вариационные ряды"
-                        HorizontalAlignment="Left" 
-                        Margin="30,240,0,0"
-                        VerticalAlignment="Top" 
-                        Click="Button_Click_1" Width="181"/>
-
-                <DataGrid x:Name="DataGrid1"
-                          Margin="30,45,30,0" 
-=======
                 <DataGrid x:Name="DataGridSeries"
                           Margin="30,35,30,0" 
->>>>>>> Stashed changes
                           GridLinesVisibility="Vertical" 
                           Height="70" 
                           VerticalAlignment="Top" 
@@ -60,47 +48,20 @@
                        HorizontalAlignment="Left"
                        Margin="30,0,0,0"
                        VerticalAlignment="Top"
-<<<<<<< Updated upstream
                        Height="25"/>
-
-                <DataGrid x:Name="DataGrid2"
-                    Margin="30,160,30,0" 
-                          GridLinesVisibility="Vertical" 
-                          Height="70" 
-                          VerticalAlignment="Top" 
-                          FontSize="14"/>
-
-                <Label Content="Вариационный ряд относительных частот:" 
-                       HorizontalAlignment="Left"
-                       Margin="30,125,0,0"
-                       VerticalAlignment="Top" 
-                       Height="25"/>
-                <DataGrid x:Name="DataGrid3"
-                    Margin="30,305,30,0" 
-=======
-                       Height="25" Width="158"/>
                 <DataGrid x:Name="DataGridIntervals"
                     Margin="30,185,29,0" 
->>>>>>> Stashed changes
                     GridLinesVisibility="Vertical" 
                     Height="70" 
                     VerticalAlignment="Top" 
                     FontSize="14" HorizontalAlignment="Stretch"/>
                 <Label Content="Интервальный ряд:" 
                     HorizontalAlignment="Left"
-<<<<<<< Updated upstream
-                    Margin="30,270,0,0"
-=======
                     Margin="30,150,0,0"
->>>>>>> Stashed changes
                     VerticalAlignment="Top" 
                     Height="25" Width="117"/>
                 <TextBox x:Name="periodTextBox" 
-<<<<<<< Updated upstream
-                         Margin="145,385,0,0" 
-=======
                          Margin="160,265,0,0" 
->>>>>>> Stashed changes
                          TextWrapping="Wrap"      
                          HorizontalAlignment="Left" 
                          VerticalAlignment="Top" 
@@ -108,21 +69,6 @@
                          PreviewTextInput="PreviewTextInput" 
                          Height="20"
                          Text="5"/>
-<<<<<<< Updated upstream
-                <Button Content="Построить вариационные ряды"
-                    HorizontalAlignment="Left" 
-                    Margin="30,240,0,0"
-                    VerticalAlignment="Top" 
-                    Click="Button_Click_1" Width="181"/>
-                <Button Content="Построить интервальный ряд"
-                    HorizontalAlignment="Left" 
-                    Margin="205,385,0,0"
-                    VerticalAlignment="Top" 
-                    Click="Button_Click_2" Width="181"/>
-                <ComboBox x:Name="comboBox"
-                          HorizontalAlignment="Left" 
-                          Margin="30,385,0,0"
-=======
                 <Button Content="Построить ряды"
                         HorizontalAlignment="Left" 
                         Margin="30,295,0,0"
@@ -133,17 +79,11 @@
                 <ComboBox x:Name="comboBoxIntervals"
                           HorizontalAlignment="Left" 
                           Margin="30,265,0,0"
->>>>>>> Stashed changes
                           VerticalAlignment="Top"
                           Width="120" 
                           Height="20" 
-<<<<<<< Updated upstream
-                          SelectionChanged="comboBox_SelectionChanged"
-                          Loaded="comboBox_Loaded">
-=======
                           SelectionChanged="comboBoxIntervals_SelectionChanged"
                           Loaded="comboBoxIntervals_Loaded" Cursor="Hand">
->>>>>>> Stashed changes
                 </ComboBox>
                 <Label x:Name="amountLabel" Content=""
                     HorizontalAlignment="Right"
@@ -151,13 +91,9 @@
                     VerticalAlignment="Top"
                     Height="25" Width="10"/>
                 <Label x:Name="periodLabel" Content="" 
-                    HorizontalAlignment="Right"
-                    Margin="0,270,30,0"
-                    VerticalAlignment="Top" 
-<<<<<<< Updated upstream
-                    Height="25"/>
-=======
-                    Height="25" Width="10"/>
+                    HorizontalAlignment="Left"
+                    Margin="220,262,0,0"
+                    VerticalAlignment="Top"/>
                 <ComboBox x:Name="comboBoxSeries"
                     HorizontalAlignment="Left" 
                     Margin="30,120,0,0"
@@ -166,7 +102,6 @@
                     Height="20" 
                     SelectionChanged="comboBoxSeries_SelectionChanged"
                     Loaded="comboBoxSeries_Loaded" Cursor="Hand"/>
->>>>>>> Stashed changes
             </Grid>
         </Grid>
     </ScrollViewer>
